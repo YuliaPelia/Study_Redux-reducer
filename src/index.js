@@ -2,7 +2,7 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 import { configureStore, bindActionCreators } from "@reduxjs/toolkit";
 import reducer from "./reducer";
-import { inc, dec, rnd } from "./actions";
+import * as actions from "./actions";
 
 const store = configureStore({ reducer });
 
@@ -20,23 +20,16 @@ subscribe(update);
 //     dispatch(creator(...args));
 //   };
 
-const { incDispatch, decDispatch, rndDispatch } = bindActionCreators(
-  {
-    incDispatch: inc,
-    decDispatch: dec,
-    rndDispatch: rnd,
-  },
-  dispatch
-);
+const { inc, dec, rnd } = bindActionCreators(actions, dispatch);
 // const decDispatch = bindActionCreators(dec, dispatch);
 // const rndDispatch = bindActionCreators(rnd, dispatch);
 
-document.getElementById("inc").addEventListener("click", incDispatch);
-document.getElementById("dec").addEventListener("click", decDispatch);
+document.getElementById("inc").addEventListener("click", inc);
+document.getElementById("dec").addEventListener("click", dec);
 document.getElementById("rnd").addEventListener("click", () => {
   const value = Math.floor(Math.random() * 10);
 
-  rndDispatch(value);
+  rnd(value);
 });
 
 export default store;
